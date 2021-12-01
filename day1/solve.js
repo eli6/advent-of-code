@@ -5,7 +5,15 @@ const { resolve } = require('path');
 
 
 module.exports.countIncreases = (dataArray) => {
-    return 0;
+
+    let res = dataArray.reduce((accumulator, currValue, currIndex, array) => {
+        if(currIndex > 0 && currValue > array[currIndex-1])
+            return accumulator+1;
+        
+        return accumulator;
+    }, 0)
+
+    return res;
 }
 
 module.exports.readData = async (dataFile) => {
@@ -22,9 +30,7 @@ module.exports.readData = async (dataFile) => {
 
         readLineInterface.on("line", line => {
             inputList.push(line.trim());
-            console.log(line);
         }).on("error", error => {
-            console.log(error);
             reject(new Array());
         }).on("close", ()=>{
             resolve(inputList);
