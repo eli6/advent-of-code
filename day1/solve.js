@@ -4,7 +4,7 @@ const path = require('path');
 const { resolve } = require('path');
 
 
-module.exports.countIncreases = (dataFile) => {
+module.exports.countIncreases = (dataArray) => {
     return 0;
 }
 
@@ -19,7 +19,7 @@ module.exports.readData = async (dataFile) => {
         })
 
         let inputList = new Array();
-        
+
         readLineInterface.on("line", line => {
             inputList.push(line.trim());
             console.log(line);

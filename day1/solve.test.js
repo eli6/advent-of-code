@@ -1,8 +1,10 @@
 const solve = require('./solve');
 let dataFile = "testdata.txt";
 
-test('countIncreases counts number of increases in data series', () => {
-  expect(solve.countIncreases(dataFile)).toBe(7);
+test('countIncreases counts number of increases in data series', async () => {
+
+    let dataArray = await solve.readData(dataFile); 
+    expect(solve.countIncreases(dataArray)).toBe(7);
 });
 
 
