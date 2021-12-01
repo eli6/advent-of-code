@@ -1,0 +1,14 @@
+{
+  "name": "advent-of-code",
+  "version": "1.0.0",
+  "description": "Solutions to the advent of code exercises",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Elin Fritiofsson",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^27.4.2"
+  }
+}
