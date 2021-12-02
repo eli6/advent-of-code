@@ -4,7 +4,8 @@
   "description": "Solutions to the advent of code exercises",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node day1/day1.js"
   },
   "author": "Elin Fritiofsson",
   "license": "ISC",
