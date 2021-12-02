@@ -1,6 +1,5 @@
 var fs = require('fs');
 var readline = require('readline');
-const path = require('path');
 
 
 module.exports.countIncreases = (dataArray) => {
@@ -28,9 +27,7 @@ module.exports.readData = async (dataFile) => {
 
     return new Promise((resolve, reject) => {
 
-        const filePath = path.join(__dirname, dataFile);
-
-        let rs = fs.createReadStream(filePath);
+        let rs = fs.createReadStream(dataFile);
         rs.on('error', error => reject(error.message));
 
         let readLineInterface = readline.createInterface({

@@ -1,9 +1,11 @@
 const solve = require('./solve');
 let dataFile = "data.txt";
+const path = require('path');
+
 
 (async () => {
     try {
-        let dataArray = await solve.readData(dataFile); 
+        let dataArray = await solve.readData(path.join(__dirname, dataFile)); 
         let counts = solve.countIncreases(dataArray);
         console.log(`************************************`);
         console.log(`***    WELCOME TO SONAR SWEEP   ****`);
