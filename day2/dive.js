@@ -26,5 +26,10 @@ module.exports.driveSubmarine = (movementData) => {
         return accumulator;
     }, 0);
 
+    if(position.depth < 0)
+        throw new Error("Submarine can't leave the water!");
+
     return position;
 }
+
+module.exports.createPositionProduct = position => position.depth*position.horizontal;

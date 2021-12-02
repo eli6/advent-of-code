@@ -20,3 +20,12 @@ test('after dive operation with test data, depth should be 10', async () => {
     expect(position.depth).toBe(10);
 
 });
+
+test('after running submarine, multiplying horizontal position with depth should give 150', async () => {
+
+    let dataArray = await solve.readData(path.join(__dirname, testData)); 
+    let position = dive.driveSubmarine(dataArray);
+    let product = dive.createPositionProduct(position);
+    expect(product).toBe(150);
+
+});
