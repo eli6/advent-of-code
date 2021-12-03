@@ -9,7 +9,7 @@
   },
   "author": "Elin Fritiofsson",
   "license": "ISC",
-  "dependencies": {
-    "jest": "^27.4.2"
+  "devDependencies": {
+    "jest": "^27.4.3"
   }
 }
