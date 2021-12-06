@@ -3,7 +3,7 @@ const path = require('path');
 const readInput = require('../lib/readInput')
 const giantSquid = require('./giantSquid')
 
-test('the drawn numbers should have first value 93 and last value 89', async () => {
+test('the drawn numbers should have first value 7 and last value 1', async () => {
 
     let dataArray = await readInput.readData(path.join(__dirname, testData)); 
     // let diagnostic = giantSquid.performDiagnostic(dataArray);
