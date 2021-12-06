@@ -18,8 +18,3 @@ test('countIncreases counts number of increases correctly in second test data', 
 });
 
 
-test('readFile creates an array with 10 entries from the first testfile', async () => {
-
-    let solutionArray = await solve.readData(path.join(__dirname, dataFile));
-    expect(solutionArray.length).toBe(10);
-});
