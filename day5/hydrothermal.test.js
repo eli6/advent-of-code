@@ -12,7 +12,7 @@ test('two lines overlap at five points in the test data', async () => {
 
 });
 
-test('two lines overlap at 1 points in the test data 2', async () => {
+test('two lines overlap at 3 points in the test data 2', async () => {
 
     let dataArray = await readInput.readData(path.join(__dirname, testData2)); 
     let overlaps = hydrothermal.findDoubleOverlaps(dataArray);
