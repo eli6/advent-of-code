@@ -2,7 +2,7 @@ let testData = "./testdata.txt";
 let testData2 = "./testdata2.txt";
 const path = require('path');
 const readInput = require('../lib/readInput')
-const hydrothermal = require('./hydrothermal_event')
+const hydrothermal = require('./hydrothermal')
 
 test('two lines overlap at five points in the test data', async () => {
 

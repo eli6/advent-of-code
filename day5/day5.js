@@ -3,9 +3,20 @@ const hydrothermal = require('./hydrothermal')
 let dataFile = "data.txt";
 const path = require('path');
 
+const EventEmitter = require('events');
+
 
 (async () => {
     try {
+
+        const eventEmitter = new EventEmitter();
+
+        let counter = 0;
+
+        eventEmitter.on('fivepercent', () => {
+            counter += 5;
+            console.log(counter + "%");
+          });
 
         console.log(`************************************`);
         console.log(`***  DAY 5: HYDROTHERMAL VENTS  ****`);
@@ -13,7 +24,7 @@ const path = require('path');
 
         
         let dataArray = await readInput.readData(path.join(__dirname, dataFile)); 
-        let overlaps = hydrothermal.findDoubleOverlaps(dataArray);
+        let overlaps = hydrothermal.findDoubleOverlaps(dataArray, eventEmitter);
 
       
        // console.log(`PRODUCT is: horizontal ${position.horizontal}, vertical ${position.depth}`);

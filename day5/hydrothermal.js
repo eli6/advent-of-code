@@ -1,6 +1,10 @@
-module.exports.findDoubleOverlaps = (dataArray) => {
+module.exports.findDoubleOverlaps = (dataArray, eventEmitter) => {
     
     let overlaps = 0;
+
+    let linesDrawn = 0;
+    let numberOfLines = dataArray.length;
+    let fivepercent = Math.floor(numberOfLines*0.05);
 
     let coordinates = Array();
 
@@ -22,29 +26,34 @@ module.exports.findDoubleOverlaps = (dataArray) => {
     })
 
     coordinatePairs.forEach(line => {
+
+        if(linesDrawn % fivepercent == 0){
+            eventEmitter.emit("fivepercent");
+        }
+
         //ex 0,9, 5,9
         let point1 = line[0].split(',');
         let point2 = line[1].split(',');
 
-        let xStartOfLine = point1[0];
-        let xEndOfLine = point2[0];
+        let xStartOfLine = parseInt(point1[0],10);
+        let xEndOfLine = parseInt(point2[0],10);
 
-        let yStartOfLine = point1[1];
-        let yEndOfLine = point2[1];
+        let yStartOfLine = parseInt(point1[1],10);
+        let yEndOfLine = parseInt(point2[1],10);
 
         if(xStartOfLine === xEndOfLine || yStartOfLine === yEndOfLine)
         {
 
             //reverse negative x direction
             if(xStartOfLine > xEndOfLine){
-                let copy = xStartOfLine;
+                let copy = Number(xStartOfLine);
                 xStartOfLine = xEndOfLine;
                 xEndOfLine = copy;
             }
 
             //reverse negative y direction
             if(yStartOfLine > yEndOfLine){
-                let copy = yStartOfLine;
+                let copy = Number(yStartOfLine);
                 yStartOfLine = yEndOfLine;
                 yEndOfLine = copy;
             }
@@ -63,22 +72,26 @@ module.exports.findDoubleOverlaps = (dataArray) => {
                     y: yStartOfLine
                 }
                 allCoordinatesToMark.push(thisCoord);
-                if(xStartOfLine < lineLengthX)
+
+                if(xStartOfLine < xEndOfLine)
                     xStartOfLine++;
                 
-                if(yStartOfLine < lineLengthY)
+                if(yStartOfLine < yEndOfLine)
                     yStartOfLine++;
             }
 
             //mark the coordinates
             allCoordinatesToMark.forEach(coordinatePair => {
                 let startIndex = coordinates.findIndex(coordinate => {
-                    return coordinate.x == coordinatePair.x && coordinate.y == coordinatePair.y;
+                    return coordinate.x === coordinatePair.x && coordinate.y === coordinatePair.y;
                 })
                 coordinates[startIndex].count += 1;
             })
             
         }
+
+        linesDrawn+=1;
+
     })
 
     //lastly count the overlaps.
