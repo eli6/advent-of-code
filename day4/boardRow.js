@@ -9,7 +9,7 @@ class BoardRow {
 
         let unmarkedSum = this.numbers.reduce((accumulator, currentVal)=> {
             if(currentVal.marked === false){
-                return accumulator+currentVal.value;
+                return accumulator+Number(currentVal.value);
             }
             return accumulator;
         }, 0)
@@ -19,7 +19,7 @@ class BoardRow {
 
     markAll(number){
         for(let markableNumber of this.numbers){
-            if(markableNumber.value === number){
+            if(Number(markableNumber.value) == number){
                 markableNumber.marked = true;
                 this.rowMarks += 1;
 

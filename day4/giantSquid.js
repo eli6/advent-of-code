@@ -1,3 +1,6 @@
+const Board = require('./board');
+const BoardRow = require('./boardRow')
+
 module.exports.performDiagnostic = ()=> {
     
     let diagnostic = {
@@ -19,53 +22,37 @@ module.exports.getDrawnNumbers = (dataArray) => {
     return drawnNumbers;
 }
 
+function getValueMarkedObject(values){
+    let splitData = values.split(/\s+/)
+    return splitData.map((number) => {
+        let obj = {};
+        obj.value = number;
+        obj.marked = false;
+        return obj;
+    })
+}
+
 module.exports.getBoards = (dataArray) => {
 
-   // let drawnArray = String(dataArray[0]).split(",");
     let boards = new Array();
+    let rowArray = new Array();
 
-    let oneBoard = new Array();
     for(let i = 2; i < dataArray.length; i++){
-        if(dataArray[i]==='') {
 
-            boards.push(oneBoard);
-            oneBoard = new Array();
+        if(dataArray[i]==='') {    //board finished, push finished board to boards array
+            boards.push(new Board(rowArray));
+            rowArray = new Array();
 
-        } else if(i===dataArray.length-1){
+        } else if(i===dataArray.length-1){ //last row of all boards arrays, read last line then finish.
 
-            let splitData = dataArray[i].split(/\s+/)
-            let mappedSplit = splitData.map((number) => {
-                let obj = {};
-                obj.number = number;
-                obj.marked = false;
-                return obj;
-            })
+            let extendedObject = getValueMarkedObject(dataArray[i]);
+            rowArray.push(new BoardRow(extendedObject));
+            boards.push(new Board(rowArray));
+            rowArray = new Array();
 
-            let obj = {
-                numbers: mappedSplit,
-                rowMarks: 0
-            };
-            oneBoard.push(obj);
-
-            oneBoard.push(obj);
-            boards.push(oneBoard);
-        
-            oneBoard = new Array();
-
-        } else { //just push one more row.
-
-            let rowString = dataArray[i].split(/\s+/)
-            let mappedSplit = rowString.map((number) => {
-                let obj = {};
-                obj.number = number;
-                obj.marked = false;
-                return obj;
-            })
-            let obj = {
-                numbers: mappedSplit,
-                rowMarks: 0
-            };
-            oneBoard.push(obj);
+        } else { //start or middle row of board
+            let extendedObject = getValueMarkedObject(dataArray[i]);
+            rowArray.push(new BoardRow(extendedObject));
         }
     }
     return boards;
@@ -77,6 +64,18 @@ module.exports.playBingo = (boards, draws) => {
     let victoryData = {
         rowScore: 0,
         finalScore: 0,
+    }
+
+    for(let draw of draws){
+        for(let board of boards){
+            let completeRow = board.markAll(draw);
+            if(completeRow){
+                console.log("Winner found!");
+                victoryData.rowScore = board.getSumOfUnmarked();
+                victoryData.finalScore = victoryData.rowScore*draw;
+                return victoryData;
+            }
+        }
     }
 
     return victoryData;

@@ -7,7 +7,7 @@ class Board{
 
     getSumOfUnmarked(){
         let unmarkedSum = this.rows.reduce((accumulator, currentVal)=> {
-            return accumulator+currentVal.getSumOfUnmarked();
+            return accumulator+Number(currentVal.getSumOfUnmarked());
         }, 0)
 
         return unmarkedSum;
