@@ -1,3 +1,21 @@
+let getUniqueLengthEntriesIn = (array) => {
+
+    let hasSameLengthAs = (entryToCount)=> {
+        return function(element){
+            return entryToCount.length === element.length;
+        }
+    }
+    let uniqueLengthEntries = array.filter(entry => {
+        let allOfSameLength = array.filter(hasSameLengthAs(entry));
+        if(allOfSameLength.length === 1){
+            return allOfSameLength;
+        }
+    })
+
+    return uniqueLengthEntries;
+}
+
+
 module.exports.getEasyNumberCount = (dataArray) => {
     
     let numberCount = dataArray.reduce((acc,line) => {
@@ -12,25 +30,14 @@ module.exports.getEasyNumberCount = (dataArray) => {
         let output = digits[1].trim().split(/\s+/);
 
 
-        let hasSameLengthAs = (entryToCount)=> {
-            return function(element){
-                return entryToCount.length === element.length;
-            }
-        }
-
         let hasSameCountAs = (entryToSearch)=> {
             return function(element){
                 return entryToSearch === element;
             }
         }
 
-        let uniqueLengthEntries = combinations.filter(combination => {
-            let allOfSameLength = combinations.filter(hasSameLengthAs(combination));
-            if(allOfSameLength.length === 1){
-                return allOfSameLength;
-            }
-        })
-
+        let uniqueLengthEntries = getUniqueLengthEntriesIn(combinations);
+       
         //sort all the letters of each combination
         let sortedCombinations = uniqueLengthEntries.map(entry => { return entry.toString().split('').sort().join('')});
         
