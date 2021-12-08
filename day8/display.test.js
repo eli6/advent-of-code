@@ -1,4 +1,4 @@
-let testData = "./data2.txt";
+let testData = "./testdata.txt";
 const path = require('path');
 const readInput = require('../lib/readInput')
 const display = require('./display')
