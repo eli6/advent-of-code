@@ -1,4 +1,4 @@
-module.exports.getEasyNumberCount = (dataArray, eventEmitter) => {
+module.exports.getEasyNumberCount = (dataArray) => {
     
     let numberCount = dataArray.reduce((acc,line) => {
 
