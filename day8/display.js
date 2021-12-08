@@ -1,49 +1,54 @@
 module.exports.getEasyNumberCount = (dataArray, eventEmitter) => {
     
-    let numberCount = 0;
+    let numberCount = dataArray.reduce((acc,line) => {
 
-    dataArray.forEach(line => {
-
+        //split input in two halves
         let digits = line.trim().split("|");
-        let combinations = digits[0].trim().split(/\s+/);
-        let output = digits[1].trim().split(/\s+/);
-        let hej = 45;
 
-        let filterFunc = (entryToCount)=> {
+        //then split the combinations into one array
+        let combinations = digits[0].trim().split(/\s+/);
+
+        //and the output sequences into another array
+        let output = digits[1].trim().split(/\s+/);
+
+
+        let getSameLength = (entryToCount)=> {
             return function(element){
                 return entryToCount.length === element.length;
             }
         }
 
-        let findSame = (entryToSearch)=> {
+        let isIdenticalTo = (entryToSearch)=> {
             return function(element){
                 return entryToSearch === element;
             }
         }
 
-        let uniqueLengthEntries = new Array();
-
-        combinations.forEach(combination=> {
-            let allOfSameLength = combinations.filter(filterFunc(combination));
+        let uniqueLengthEntries = combinations.filter(combination => {
+            let allOfSameLength = combinations.filter(getSameLength(combination));
             if(allOfSameLength.length === 1){
-                uniqueLengthEntries.push(allOfSameLength);
+                return allOfSameLength;
             }
         })
 
+        //sort all the letters of each combination
         let sortedCombinations = uniqueLengthEntries.map(entry => { return entry.toString().split('').sort().join('')});
         
+        //sort all letters of the output
         let sortedOutput = output.map(entry => { return entry.toString().split('').sort().join('')});
 
-        let numberOfCombinationsInOutput = sortedCombinations.forEach(combination => {
-            let sameCount = sortedOutput.filter(findSame(combination)).length;
+        let numberEasyLettersThisLine = sortedCombinations.reduce((accumulator, currVal)=> {
+            let sameCount = sortedOutput.filter(isIdenticalTo(currVal)).length;
+            if(sameCount > 0)
+                return accumulator+sameCount;
 
-            if(sameCount > 0){
-                numberCount+=sameCount;
-            }
+            return accumulator;
+        }, 0);
 
-        })
-        let hej4 = 45;
-    })
+        return acc+numberEasyLettersThisLine;
+        
+    }, 0)
 
     return numberCount;
+
 }
