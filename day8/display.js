@@ -12,20 +12,20 @@ module.exports.getEasyNumberCount = (dataArray) => {
         let output = digits[1].trim().split(/\s+/);
 
 
-        let getSameLength = (entryToCount)=> {
+        let hasSameLengthAs = (entryToCount)=> {
             return function(element){
                 return entryToCount.length === element.length;
             }
         }
 
-        let isIdenticalTo = (entryToSearch)=> {
+        let hasSameCountAs = (entryToSearch)=> {
             return function(element){
                 return entryToSearch === element;
             }
         }
 
         let uniqueLengthEntries = combinations.filter(combination => {
-            let allOfSameLength = combinations.filter(getSameLength(combination));
+            let allOfSameLength = combinations.filter(hasSameLengthAs(combination));
             if(allOfSameLength.length === 1){
                 return allOfSameLength;
             }
@@ -38,7 +38,7 @@ module.exports.getEasyNumberCount = (dataArray) => {
         let sortedOutput = output.map(entry => { return entry.toString().split('').sort().join('')});
 
         let numberEasyLettersThisLine = sortedCombinations.reduce((accumulator, currVal)=> {
-            let sameCount = sortedOutput.filter(isIdenticalTo(currVal)).length;
+            let sameCount = sortedOutput.filter(hasSameCountAs(currVal)).length;
             if(sameCount > 0)
                 return accumulator+sameCount;
 
