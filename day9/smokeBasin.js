@@ -1,8 +1,13 @@
 
 let createHeightMapFromData = dataArray => {
     let heightmap = dataArray.map((line) => {
-        return dataArray.toString().trim().split('');
+        let splitline = line.toString().trim().split('');
+        return splitline.map(number => {
+            return parseInt(number,10);
+        })
     })
+
+
     return heightmap;
 
 }
@@ -21,7 +26,7 @@ let getLowPointsForRowWithIndex = (rowIndex, matrix) => {
         let lowerThanBelow = true;
 
         //check horizontally in row (subtract and add to index i).
-        if(i+1 <= thisRow.length && cell>= thisRow[i+1])
+        if(i+1 <= thisRow.length-1 && cell>= thisRow[i+1])
             lowerThanRight = false;
 
         if(i-1 >= 0 && cell >= thisRow[i-1])
@@ -31,7 +36,7 @@ let getLowPointsForRowWithIndex = (rowIndex, matrix) => {
         if(rowIndex-1 >= 0 && cell >= matrix[rowIndex-1][i])
             lowerThanAbove = false;
 
-        if(rowIndex+1 <= matrix.length && cell >= matrix[rowIndex+1][i])
+        if(rowIndex+1 <= matrix.length-1 && cell >= matrix[rowIndex+1][i])
             lowerThanBelow = false;
 
         
@@ -59,7 +64,11 @@ let findLowPointsIn = (heightmap => {
 })
 
 let getSumOf = lowPointsArray => {
-    return lowPointsArray.reduce(x, y => x+y);
+    return lowPointsArray.reduce((x, y) => {return x+y},0);
+}
+
+let addOneTo = (points) => {
+    return points.map(point => point+1);
 }
 
 module.exports.getRiskLevelSum = (dataArray)=> {
@@ -68,7 +77,9 @@ module.exports.getRiskLevelSum = (dataArray)=> {
 
     let lowPoints = findLowPointsIn(heightmap);
 
-    let sum = getSumOf(lowPoints);
+    let riskLevels = addOneTo(lowPoints);
+    
+    let sum = getSumOf(riskLevels);
 
     return sum;
 
