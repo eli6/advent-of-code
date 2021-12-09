@@ -44,6 +44,7 @@ module.exports.getEasyNumberCount = (dataArray) => {
         //sort all letters of the output
         let sortedOutput = output.map(entry => { return entry.toString().split('').sort().join('')});
 
+        //get numbers of easy letters in output
         let numberEasyLettersThisLine = sortedCombinations.reduce((accumulator, currVal)=> {
             let sameCount = sortedOutput.filter(hasSameCountAs(currVal)).length;
             if(sameCount > 0)
