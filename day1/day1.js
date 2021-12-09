@@ -8,7 +8,7 @@ const path = require('path');
         let dataArray = await solve.readData(path.join(__dirname, dataFile)); 
         let counts = solve.countIncreases(dataArray);
         console.log(`************************************`);
-        console.log(`***    WELCOME TO SONAR SWEEP   ****`);
+        console.log(`***   DAY 1: SONAR SWEEP   ****`);
         console.log(`************************************`); 
         console.log(`Found ${counts} depth increases in data`);  
         console.log(`************************************`)  
