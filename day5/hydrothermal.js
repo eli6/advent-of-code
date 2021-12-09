@@ -4,7 +4,7 @@ module.exports.findDoubleOverlaps = (dataArray, eventEmitter) => {
 
     let linesDrawn = 0;
     let numberOfLines = dataArray.length;
-    let fivepercent = Math.floor(numberOfLines*0.05);
+    let fivepercent = Math.floor(numberOfLines*0.01);
 
     let coordinates = Array();
 
