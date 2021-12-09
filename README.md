@@ -1,6 +1,6 @@
 # Advent of Code :christmas_tree:
 
-Solutions to the part 1 (in some cases also part 2) Advent of Code exercises for 2021.
+Solutions to the Advent of Code exercises for 2021. For most exercises there is only a solution for part 1.
 
 All exercises can be found here: [https://adventofcode.com/2021](https://adventofcode.com/2021)
 
