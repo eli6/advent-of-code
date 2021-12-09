@@ -84,3 +84,6 @@ module.exports.getRiskLevelSum = (dataArray)=> {
     return sum;
 
 }
+
+module.exports.title = "Smoke basin";
+module.exports.day = 9;

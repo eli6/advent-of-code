@@ -5,11 +5,8 @@ const path = require('path');
 
 (async () => {
     try {
-
-        let counter = 0;
-
         console.log(`************************************`);
-        console.log(`*****  DAY 9:  HEIGHTMAP  *****`);
+        console.log(`** DAY ${solution.day}:  ${solution.title}  **`);
         console.log(`************************************`); 
 
         
