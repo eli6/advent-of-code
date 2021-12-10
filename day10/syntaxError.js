@@ -3,12 +3,12 @@ let characterIsOpeningCharacter = (char, openingCharList) => {
     return isOpening;
 }
 
-let getAllOpeningCharactersFrom = pairs => {
+let getAllPossibleOpeningCharactersFrom = pairs => {
     return pairs.map(pair => pair.open);
 }
 
 
-let findSyntaxPairFor = openingChar => {
+let findCompletePairFor = openingChar => {
     return function(pair) {
         return pair.open === openingChar
     }
@@ -23,7 +23,7 @@ let getFirstCorruptedCharacter = line => {
         {open: "<", close: ">"}
     ]
 
-    let openingCharacters = getAllOpeningCharactersFrom(matchingPairs);
+    let openingCharacters = getAllPossibleOpeningCharactersFrom(matchingPairs);
     let lineArray = line.trim().split('');
     let stack = new Array();
 
@@ -37,7 +37,7 @@ let getFirstCorruptedCharacter = line => {
             stack.push(line[i]);
         } else {
             let lastOpening = stack.pop();
-            let correspondingPair = matchingPairs.filter(findSyntaxPairFor(lastOpening));
+            let correspondingPair = matchingPairs.filter(findCompletePairFor(lastOpening));
             let expectedClosingCharacter = correspondingPair[0].close;
             if(thisChar !== expectedClosingCharacter){
                 return thisChar;
