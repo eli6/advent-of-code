@@ -60,8 +60,6 @@ let getFirstCorrupted = line => {
 
 module.exports.getCorruptedLinesScore = dataArray => {
 
-    let score = 0;
-
     const scores = [
         { char: ")", score: 3},
         { char: "]", score: 57},
@@ -69,22 +67,21 @@ module.exports.getCorruptedLinesScore = dataArray => {
         { char: ">", score: 25137}
     ]
 
-    dataArray.forEach(line=>{
+    return dataArray.reduce((accumulator, line) => {
         let character = getFirstCorrupted(line);
-        let index = scores.findIndex(obj => obj.char === character);
-        if(index > -1){
-            let lineScore = scores[index].score;
-            score+=lineScore;
+        let scoreIndex = scores.findIndex(obj => obj.char === character);
+        if(scoreIndex > -1){
+            let lineScore = scores[scoreIndex].score;
+            return accumulator+lineScore;
         }
-       
-    });
+        return accumulator;
+    }, 0)
 
-    return score;
 }
 
 
 module.exports.getTotalSyntaxErrorScore = (dataArray)=> {
-    
+
     let score = this.getCorruptedLinesScore(dataArray);
     return score;
 }
