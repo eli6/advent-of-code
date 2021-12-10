@@ -25,7 +25,6 @@ let getFirstCorruptedCharacter = line => {
 
     let openingCharacters = getAllOpeningCharactersFrom(matchingPairs);
     let lineArray = line.trim().split('');
-    let firstCorrupted = '';
     let stack = new Array();
 
     for(let i = 0; i < line.length; i++){
@@ -39,23 +38,16 @@ let getFirstCorruptedCharacter = line => {
         } else {
             let lastOpening = stack.pop();
             let correspondingPair = matchingPairs.filter(findSyntaxPairFor(lastOpening));
-            if(thisChar !== correspondingPair[0].close){
+            let expectedClosingCharacter = correspondingPair[0].close;
+            if(thisChar !== expectedClosingCharacter){
                 return thisChar;
             }
         } 
 
     }
 
-    return firstCorrupted;
-    
-
-}
-
-let getFirstCorrupted = line => {
-    let firstCorruptedCharacter = '';
-    firstCorruptedCharacter = getFirstCorruptedCharacter(line);
-    return firstCorruptedCharacter;
-
+    //no character found.
+    return '';
 }
 
 module.exports.getCorruptedLinesScore = dataArray => {
@@ -68,7 +60,7 @@ module.exports.getCorruptedLinesScore = dataArray => {
     ]
 
     return dataArray.reduce((accumulator, line) => {
-        let character = getFirstCorrupted(line);
+        let character = getFirstCorruptedCharacter(line);
         let scoreIndex = scores.findIndex(obj => obj.char === character);
         if(scoreIndex > -1){
             let lineScore = scores[scoreIndex].score;
