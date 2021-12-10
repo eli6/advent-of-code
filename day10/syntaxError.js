@@ -30,7 +30,7 @@ let getFirstCorruptedCharacter = line => {
     for(let i = 0; i < line.length; i++){
 
         let thisChar = line[i];
-        let isOpeningChar = characterIsOpeningCharacter(line[i], openingCharacters)
+        let isOpeningChar = characterIsOpeningCharacter(thisChar, openingCharacters)
 
         if(isOpeningChar)
         {
