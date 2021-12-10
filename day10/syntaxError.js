@@ -14,14 +14,6 @@ let findSyntaxPairFor = openingChar => {
     }
 }
 
-
-
-// let findInArray = toSearchFor => {
-//     let find = '';
-//     find = array.find(element => element === toSearchFor);
-//     return find;
-// }
-
 let getFirstCorruptedCharacter = line => {
 
     let matchingPairs = [
@@ -47,10 +39,7 @@ let getFirstCorruptedCharacter = line => {
         } else {
             let lastOpening = stack.pop();
             let correspondingPair = matchingPairs.filter(findSyntaxPairFor(lastOpening));
-            if(thisChar === correspondingPair[0].close){
-                console.log("right closing!");
-            } else {
-                console.log("wrong closing");
+            if(thisChar !== correspondingPair[0].close){
                 return thisChar;
             }
         } 
@@ -62,9 +51,7 @@ let getFirstCorruptedCharacter = line => {
 
 }
 
-
 let getFirstCorrupted = line => {
-   
     let firstCorruptedCharacter = '';
     firstCorruptedCharacter = getFirstCorruptedCharacter(line);
     return firstCorruptedCharacter;
@@ -72,6 +59,7 @@ let getFirstCorrupted = line => {
 }
 
 module.exports.getCorruptedLinesScore = dataArray => {
+
     let score = 0;
 
     const scores = [
@@ -81,7 +69,6 @@ module.exports.getCorruptedLinesScore = dataArray => {
         { char: ">", score: 25137}
     ]
 
-    //replace with filter+
     dataArray.forEach(line=>{
         let character = getFirstCorrupted(line);
         let index = scores.findIndex(obj => obj.char === character);
@@ -100,7 +87,6 @@ module.exports.getTotalSyntaxErrorScore = (dataArray)=> {
     
     let score = this.getCorruptedLinesScore(dataArray);
     return score;
-
 }
 
 module.exports.title = "Syntax Errors";
