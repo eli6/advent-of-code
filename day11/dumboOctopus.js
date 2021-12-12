@@ -33,14 +33,13 @@ let increaseAdjacentTo = (coordinate, array) => {
 }
 
 let flashAndPropagateFrom = (coordinate, array) => {
+    
     let octopus = array[coordinate.y][coordinate.x];
-
     //only propagate from this if it hasnt already flashed.
     if(octopus.value > 9 && octopus.flashed === false){
         octopus.flash();
         increaseAdjacentTo(coordinate, array);
     }
-    let allNeighborsIncrease = 4;
 }
 
 let flashOctopusse = octopus2dArray => {
@@ -52,7 +51,7 @@ let flashOctopusse = octopus2dArray => {
                 flashAndPropagateFrom(new Coordinate(x,y), octopus2dArray);
         }
     }
-
+    
     return octopus2dArray;
 }
 
