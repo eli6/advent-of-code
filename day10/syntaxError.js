@@ -50,7 +50,7 @@ let getFirstCorruptedCharacter = line => {
     return '';
 }
 
-module.exports.getCorruptedLinesScore = dataArray => {
+let getCorruptedLinesScore = dataArray => {
 
     const scores = [
         { char: ")", score: 3},
@@ -71,10 +71,17 @@ module.exports.getCorruptedLinesScore = dataArray => {
 
 }
 
+module.exports.getCorruptedLinesIn = dataArray => {
+    return dataArray.filter(line => {
+        return getFirstCorruptedCharacter(line) != '';
+    })
+}
+
 
 module.exports.getTotalSyntaxErrorScore = (dataArray)=> {
 
-    let score = this.getCorruptedLinesScore(dataArray);
+    let corruptedLines = this.getCorruptedLinesIn(dataArray);
+    let score = getCorruptedLinesScore(corruptedLines);
     return score;
 }
 
