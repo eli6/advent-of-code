@@ -33,7 +33,6 @@ let findPaths = (graph, nodeName, destName, pathStack, allPaths) => {
     for(let neighbor of node.adjacent){
         if(neighbor.name === "start")
             continue;
-
         if(neighbor instanceof BigNode || (neighbor instanceof SmallNode && !neighbor.visited)){
             let newPath = pathStack;
             let graphCopy = clone(graph);
