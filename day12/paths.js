@@ -18,18 +18,14 @@ let createGraph = inputArray => {
 let findPaths = (graph, nodeName, destName, pathStack, allPaths) => {
 
     let node = graph.addNode(nodeName);    
-    node.discovered = true;
     pathStack += node.name + ",";
+    node.visited = true;
 
     if(node.name === destName){
         allPaths.push(pathStack);
         return;
     }
-    
-    if(node instanceof SmallNode){
-        node.visited = true;
-    }
-
+ 
     for(let neighbor of node.adjacent){
         if(neighbor.name === "start")
             continue;
