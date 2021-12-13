@@ -23,22 +23,24 @@ let findPaths = (graph, nodeName, destName, pathStack, allPaths) => {
 
     if(node.name === destName){
         allPaths.push(pathStack);
-    } else if(node instanceof SmallNode){
+        return;
+    }
+    
+    if(node instanceof SmallNode){
         node.visited = true;
     }
 
-    if(node.name!==destName){
-        for(let neighbor of node.adjacent){
-            if(neighbor.name === "start")
-                continue;
+    for(let neighbor of node.adjacent){
+        if(neighbor.name === "start")
+            continue;
 
-            if(neighbor instanceof BigNode || (neighbor instanceof SmallNode && !neighbor.visited)){
-                let newPath = pathStack;
-                let graphCopy = clone(graph);
-                findPaths(graphCopy, neighbor.name, destName, newPath, allPaths);
-            }
+        if(neighbor instanceof BigNode || (neighbor instanceof SmallNode && !neighbor.visited)){
+            let newPath = pathStack;
+            let graphCopy = clone(graph);
+            findPaths(graphCopy, neighbor.name, destName, newPath, allPaths);
         }
     }
+  
 }
 
 module.exports.getNumberOfPaths = inputArray => {
