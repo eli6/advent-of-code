@@ -1,6 +1,15 @@
 const lib = require('../lib/readInput');
 
 
+let getAllPairsFrom = string => {
+    let templateArray = string.split('');
+    let pairs = templateArray.map((value, index, array) => {
+        if(index < array.length-1)
+            return value+array[index+1];
+    })
+    return pairs;
+}
+
 module.exports.polymerize = (inputArray, insertCount) => {
 
     let parts = lib.splitAtEmptyLine(inputArray);
@@ -8,50 +17,57 @@ module.exports.polymerize = (inputArray, insertCount) => {
     let pairInsertions = parts[1];
 
     let pairInsertionMap = new Map();
+
+    //get insertion mappings.
     pairInsertions.forEach(pair => {
         let replacementPair = pair.trim().split('->').map(string => string.trim());
         pairInsertionMap.set(replacementPair[0], replacementPair[1]);
     })
 
-
     let polymerString = polymerTemplate[0];
 
+    //get all pairs.
+    let pairs = getAllPairsFrom(polymerString);
+
+    //initial counting of pairs.
     let county = new Map();
- 
+    pairs.forEach(pair => {
+        county.get(pair) ? county.set(pair, county.get(pair)+1) : county.set(pair, 1);
+    })
+
+    //initial counting of letters
+    let letterCount = new Map();
+    for(let letter of polymerString){
+        letterCount.get(letter) ? letterCount.set(letter, letterCount.get(letter)+1) : letterCount.set(letter, 1);
+    }
+
+    //make insertions
     for(let i = 0; i < insertCount; i++)
     {
-        let templateArray = polymerString.split('');
-        let pairs = templateArray.map((value, index, array) => {
-            if(index < array.length-1)
-                return value+array[index+1];
-        })
+        let temp = new Map();
 
-        let temp = [];
-        pairs.forEach(pair => {
+       //all this simultaneously
+        let countykeys = [...county.keys()]
+        countykeys.forEach(pair => {
             if(pairInsertionMap.has(pair))
             {
+                let pairCount = county.get(pair);
                 let insertionChar = pairInsertionMap.get(pair);
-                county.set(pair.slice(0,1) + insertionChar, 1);
-                county.set(insertionChar + pair.slice(1), 1);
-                temp.push([pair.slice(0,1), insertionChar, pair.slice(1)].join(''));
-            }
-        
-        })
+                //count the new character.
+                letterCount.get(insertionChar) ? letterCount.set(insertionChar, letterCount.get(insertionChar)+pairCount) : letterCount.set(insertionChar,1);
+                
+                let firstPair = pair.slice(0,1)+insertionChar;
+                let secondPair = insertionChar+pair.slice(1);
 
-        let mergeReady = temp.map((trio, index, array) => {
-            if(index > 0){
-                return trio.slice(1);
-            } else     {
-                return trio;
+                temp.get(firstPair) ? temp.set(firstPair, temp.get(firstPair)+pairCount) : temp.set(firstPair, pairCount);
+                temp.get(secondPair) ? temp.set(secondPair, temp.get(secondPair)+pairCount) : temp.set(secondPair, pairCount);
             }
         })
 
-            
-        polymerString = mergeReady.join('');
-    
+        county = temp;
     }
     
-    return polymerString;
+    return letterCount;
 
 }
 
@@ -63,15 +79,13 @@ let getCounts = string => {
     return counts;
 }
 
-module.exports.getMostCommonCount = string => {
-    let counts = getCounts(string);
-    return Math.max(...counts.values());
+module.exports.getMostCommonCount = countsMap => {
+    return Math.max(...countsMap.values());
 
 }
 
-module.exports.getLeastCommonCount = string => {
-    let counts = getCounts(string);
-    return Math.min(...counts.values());
+module.exports.getLeastCommonCount = countsMap => {
+    return Math.min(...countsMap.values());
 }
 
 

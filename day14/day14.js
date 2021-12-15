@@ -1,5 +1,5 @@
 const readInput = require('../lib/readInput')
-const solution = require('./polymerization2')
+const solution = require('./polymerization')
 let dataFile = "data.txt";
 const path = require('path');
 

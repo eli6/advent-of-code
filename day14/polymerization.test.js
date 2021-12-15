@@ -1,7 +1,7 @@
 let testData = "./testdata.txt";
 const path = require('path');
 const readInput = require('../lib/readInput')
-const solution = require('./polymerization2.js')
+const solution = require('./polymerization.js')
 
 
 // test('after step 5 the polymer should have length 97', async () => {
