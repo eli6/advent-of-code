@@ -65,6 +65,10 @@ let setPriorityOfNeighbor = (thisNode, neighbor) => {
     }
 }
 
+let bottomCornerReached = (thisNode, maxX, maxY) => {
+    return thisNode.coordinates.x === maxX && thisNode.coordinates.y ===maxY;
+}
+
 
 module.exports.getPathWeight = (inputArray) => {
 
@@ -79,12 +83,11 @@ module.exports.getPathWeight = (inputArray) => {
         let thisNode = priorityQueue.shift();
 
         //bottom right corner found, return with the priority value.
-        if(thisNode.coordinates.x === maxX && thisNode.coordinates.y ===maxY){
+        if(bottomCornerReached(thisNode, maxX, maxY)){
             return thisNode.priority;
         }
 
         const directions = ["up", "down", "right", "left"];
-
         directions.forEach(direction => { 
             let neighbor = getNeighborNode(direction, thisNode, priorityQueue);
             setPriorityOfNeighbor(thisNode, neighbor);
