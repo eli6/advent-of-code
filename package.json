@@ -16,7 +16,8 @@
     "day11": "node day11/day11.js",
     "day12": "node day12/day12.js",
     "day13": "node day13/day13.js",
-    "day14": "node day14/day14.js"
+    "day14": "node day14/day14.js",
+    "day15": "node day15/day15.js"
   },
   "author": "Elin Fritiofsson",
   "license": "ISC",
