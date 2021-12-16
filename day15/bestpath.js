@@ -2,6 +2,35 @@ let lib = require('../lib/coordinates');
 let Coordinate = require('../lib/coordinates').Coordinate;
 
 
+module.exports.title = "Best path";
+module.exports.day = 15;
+module.exports.resultMessage = "Result is: "
+
+module.exports.getPathWeight = (inputArray) => {
+
+    let priorityQueue = createPriorityQueueFrom(inputArray);
+    let {maxX, maxY} = getMaxMinFrom(priorityQueue);
+
+    //djikstras:
+    while(priorityQueue.length > 0){
+
+        priorityQueue = sortQueue(priorityQueue);
+        let thisNode = getFirstInQueue(priorityQueue);
+
+        //bottom right corner found, return with the priority value.
+        if(bottomCornerReached(thisNode, maxX, maxY)){
+            return thisNode.priority;
+        }
+
+        const directions = ["up", "down", "right", "left"];
+        directions.forEach(direction => { 
+            let neighbor = getNeighborNode(direction, thisNode, priorityQueue);
+            setPriorityOfNeighbor(thisNode, neighbor);
+        })
+
+    }
+}
+
 let getCoordinate = (coordSearched) => (element) => {
     return element.coordinates.y === coordSearched.y && element.coordinates.x === coordSearched.x;
 }
@@ -74,31 +103,3 @@ let getFirstInQueue = priorityQueue => {
 }
 
 
-module.exports.getPathWeight = (inputArray) => {
-
-    let priorityQueue = createPriorityQueueFrom(inputArray);
-    let {maxX, maxY} = getMaxMinFrom(priorityQueue);
-
-    //djikstras:
-    while(priorityQueue.length > 0){
-
-        priorityQueue = sortQueue(priorityQueue);
-        let thisNode = getFirstInQueue(priorityQueue);
-
-        //bottom right corner found, return with the priority value.
-        if(bottomCornerReached(thisNode, maxX, maxY)){
-            return thisNode.priority;
-        }
-
-        const directions = ["up", "down", "right", "left"];
-        directions.forEach(direction => { 
-            let neighbor = getNeighborNode(direction, thisNode, priorityQueue);
-            setPriorityOfNeighbor(thisNode, neighbor);
-        })
-
-    }
-}
-
-module.exports.title = "Best path";
-module.exports.day = 15;
-module.exports.resultMessage = "Result is: "
