@@ -43,6 +43,29 @@ let getMaxMinFrom = queue => {
     return {maxX: maxX, maxY: maxY};
 }
 
+let getNeighborNode = (direction, thisNode, priorityQueue) => {
+
+    let neighborDelta = lib.coordinates(direction);
+    let neighborCoords = lib.getValueWithDeltaNoValidation(thisNode.coordinates, neighborDelta);
+    let index = priorityQueue.findIndex(getCoordinate({x: neighborCoords.x, y: neighborCoords.y}));
+    if(index!=-1){ //neighbor has not been visited and exisits in queue.
+        let neighbor = priorityQueue.at(index); 
+        return neighbor;
+    }
+    return null;
+}
+
+let setPriorityOfNeighbor = (thisNode, neighbor) => {
+    if(neighbor!==null){
+        let thisPriority = thisNode.priority;
+        //set neighbor priority to new value if its higher than my prio+the weight of the edge going to that neighbor
+        if(thisPriority+neighbor.weight < neighbor.priority){
+            neighbor.priority = thisPriority+neighbor.weight;
+        }
+    }
+}
+
+
 module.exports.getPathWeight = (inputArray) => {
 
     let priorityQueue = createPriorityQueueFrom(inputArray);
@@ -62,20 +85,9 @@ module.exports.getPathWeight = (inputArray) => {
 
         const directions = ["up", "down", "right", "left"];
 
-        directions.forEach(direction => {
-
-            let neighborDelta = lib.coordinates(direction);
-            let neighborCoords = lib.getValueWithDeltaNoValidation(thisNode.coordinates, neighborDelta);
-            let index = priorityQueue.findIndex(getCoordinate({x: neighborCoords.x, y: neighborCoords.y}));
-            if(index!=-1){ //neighbor has not been visited and exisits in queue.
-                let neighbor = priorityQueue.at(index); 
-                let thisPriority = thisNode.priority;
-
-                //set neighbor priority to new value if its higher than my prio+the weight of the edge going to that neighbor
-                if(thisPriority+neighbor.weight < neighbor.priority){
-                    neighbor.priority = thisPriority+neighbor.weight;
-                }
-            }
+        directions.forEach(direction => { 
+            let neighbor = getNeighborNode(direction, thisNode, priorityQueue);
+            setPriorityOfNeighbor(thisNode, neighbor);
         })
 
     }
