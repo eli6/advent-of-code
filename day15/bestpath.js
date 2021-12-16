@@ -69,18 +69,21 @@ let bottomCornerReached = (thisNode, maxX, maxY) => {
     return thisNode.coordinates.x === maxX && thisNode.coordinates.y ===maxY;
 }
 
+let getFirstInQueue = priorityQueue => {
+    return priorityQueue.shift();
+}
+
 
 module.exports.getPathWeight = (inputArray) => {
 
     let priorityQueue = createPriorityQueueFrom(inputArray);
-
     let {maxX, maxY} = getMaxMinFrom(priorityQueue);
 
     //djikstras:
     while(priorityQueue.length > 0){
 
         priorityQueue = sortQueue(priorityQueue);
-        let thisNode = priorityQueue.shift();
+        let thisNode = getFirstInQueue(priorityQueue);
 
         //bottom right corner found, return with the priority value.
         if(bottomCornerReached(thisNode, maxX, maxY)){
