@@ -14,7 +14,7 @@ const path = require('path');
         let weight = solution.getPathWeight(dataArray);
 
        // console.log(`PRODUCT is: horizontal ${position.horizontal}, vertical ${position.depth}`);
-        console.log(`${solution.resultMessage} ${endresult}`);  
+        console.log(`${solution.resultMessage} ${weight}`);  
         console.log(`************************************`)  
     } catch(e)
     {
