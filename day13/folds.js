@@ -121,7 +121,7 @@ module.exports.getDotsFromFolding = (inputArray, nrFolds) => {
         }, 0);
 
         countAfterAllFolds = dotsCount;
-        print(paper);
+       // print(paper);
     }
 
   
