@@ -1,5 +1,5 @@
 const readInput = require('../lib/readInput')
-const solution = require('./bestpath')
+const solution = require('./trickshot')
 let dataFile = "data.txt";
 const path = require('path');
 
@@ -8,13 +8,12 @@ const path = require('path');
         console.log(`************************************`);
         console.log(`** DAY ${solution.day}:  ${solution.title}  **`);
         console.log(`************************************`); 
-
         
         let dataArray = await readInput.readData(path.join(__dirname, dataFile)); 
-        let weight = solution.getPathWeight(dataArray);
+        let height = solution.findMaxY(dataArray);
 
        // console.log(`PRODUCT is: horizontal ${position.horizontal}, vertical ${position.depth}`);
-        console.log(`${solution.resultMessage} ${endresult}`);  
+        console.log(`${solution.resultMessage} ${height}`);  
         console.log(`************************************`)  
     } catch(e)
     {
